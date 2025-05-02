@@ -2,7 +2,7 @@
 <img width="2992" alt="Image" src="/Artefatos/Diagramas/Diagrama de Caso de Uso.png" />
 
 # Diagrama de Classe
-<img width="2992" alt="Image" src="/Artefatos/Diagramas/Diagrama de Classe.png" />
+<img width="2992" alt="Image" src="/Artefatos/Diagramas/Diagrama de Classes.png" />
 
 # Diagrama de Componentes
 <img width="2992" alt="Image" src="/Artefatos/Diagramas/Diagrama de Componente.png" />
