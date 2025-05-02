@@ -1,3 +1,6 @@
+# Diagrama de Caso de Uso
+<img width="2992" alt="Image" src="/Artefatos/Diagramas/Diagrama de Caso de Uso.png" />
+
 # Histórias de Usuário
 | ID  | História de Usuário |
 |----|--------------------|
