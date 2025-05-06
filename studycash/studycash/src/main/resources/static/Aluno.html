@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/aluno.css">
+        <title>Cadastro de Alunos - Sistema de Mérito</title>
+
+    </head>
+    <body>
+        <h1>StudyCash - Cadastro de Empresas</h1>
+    
+    <div class="container">
+        <div class="form-section">
+            <h2>Cadastrar Aluno</h2>
+            <form id="aluno-form">
+                <input type="hidden" id="aluno-id">
+                
+                <div class="form-group">
+                    <label for="aluno-nome">Nome Completo</label>
+                    <input type="text" id="aluno-nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="aluno-email">E-mail</label>
+                    <input type="email" id="aluno-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="aluno-cpf">CPF</label>
+                    <input type="text" id="aluno-cpf" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="aluno-rg">RG</label>
+                    <input type="text" id="aluno-rg" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="aluno-endereco">Endereço Completo</label>
+                    <input type="text" id="aluno-endereco" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="aluno-curso">Curso</label>
+                    <input type="text" id="aluno-curso" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="aluno-instituicao">Instituição de Ensino</label>
+                    <select id="aluno-instituicao" name="instituicao" required>
+                        <option value="">Selecione uma instituição</option>
+                        <!-- Opções serão carregadas via JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" id="submit-btn">Cadastrar</button>
+                    <button type="button" id="cancel-btn" class="btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="list-section">
+            <h2>Alunos Cadastrados</h2>
+            <button id="refresh-btn">Atualizar Lista</button>
+            <ul id="alunos-list"></ul>
+        </div>
+    </div>
+    <script src="js/aluno.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/empresa.css">
+    <title>Cadastro de Empresas - StudyCash</title>
+</head>
+
+<body>
+    <h1>StudyCash - Cadastro de Empresas</h1>
+
+    <div class="container">
+        <div class="form-section">
+            <h2>Cadastrar Empresa</h2>
+            <form id="empresa-form">
+                <input type="hidden" id="empresa-id">
+                
+                <div class="form-group">
+                    <label for="empresa-nome">Nome da Empresa</label>
+                    <input type="text" id="empresa-nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="empresa-cnpj">CNPJ</label>
+                    <input type="text" id="empresa-cnpj" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="empresa-email">E-mail</label>
+                    <input type="email" id="empresa-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="empresa-endereco">Endereço</label>
+                    <input type="text" id="empresa-endereco" required>
+                </div>
+
+                <!-- Seção de Vantagens (Dinâmica via JS) -->
+                <div id="vantagens-container">
+                    <h3>Vantagens Oferecidas</h3>
+                    <button type="button" id="add-vantagem">Adicionar Vantagem</button>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" id="submit-btn">Salvar</button>
+                    <button type="button" id="cancel-btn" class="btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="list-section">
+            <h2>Empresas Cadastradas</h2>
+            <button id="refresh-btn">Atualizar Lista</button>
+            <ul id="empresas-list"></ul>
+        </div>
+    </div>
+
+    <script src="js/empresa.js"></script>
+</body>
+</html>
