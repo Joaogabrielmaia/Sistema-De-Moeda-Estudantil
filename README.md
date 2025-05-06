@@ -4,6 +4,9 @@
 # Diagrama de Classe
 <img width="2992" alt="Image" src="/Artefatos/Diagramas/Diagrama de Classes.png" />
 
+# Diagrama ER
+<img width="2992" alt="Image" src="/Artefatos/Diagramas/Diagrama ER.png" />
+
 # Diagrama de Componentes
 <img width="2992" alt="Image" src="/Artefatos/Diagramas/Diagrama de Componente.png" />
 
