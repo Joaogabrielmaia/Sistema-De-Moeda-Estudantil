@@ -8,7 +8,7 @@
 <img width="2992" alt="Image" src="/Artefatos/Diagramas/Diagrama ER.png" />
 
 # Diagrama de Componentes
-<img width="2992" alt="Image" src="/Artefatos/Diagramas/Diagrama de Componente.png" />
+<img width="2992" alt="Image" src="https://github.com/user-attachments/assets/68119d09-9121-4100-80de-27c81c10d661" />
 
 # Histórias de Usuário
 | ID  | História de Usuário |
