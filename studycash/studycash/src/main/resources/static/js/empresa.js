@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Elementos do DOM
+
     const empresaForm = document.getElementById('empresa-form');
     const vantagensContainer = document.getElementById('vantagens-container');
     const addVantagemBtn = document.getElementById('add-vantagem');
@@ -8,14 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelBtn = document.getElementById('cancel-btn');
     const submitBtn = document.getElementById('submit-btn');
 
-    // URL da API (ajuste conforme necessário)
     const API_URL = 'http://localhost:8080/api/empresas';
 
-    // ==============================================
-    // 1. Adicionar Campos de Vantagem Dinamicamente
-    // ==============================================
     addVantagemBtn.addEventListener('click', () => {
-        const vantagemId = Date.now(); // ID único para cada vantagem
+        const vantagemId = Date.now(); 
         
         const div = document.createElement('div');
         div.className = 'vantagem-item';
@@ -39,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         vantagensContainer.appendChild(div);
     });
 
-    // Remover vantagem
     vantagensContainer.addEventListener('click', (e) => {
         if (e.target.classList.contains('remove-vantagem')) {
             e.target.closest('.vantagem-item').remove();
@@ -47,9 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ==============================================
-    // 2. Funções Auxiliares
-    // ==============================================
     function coletarVantagens() {
         return Array.from(document.querySelectorAll('.vantagem-item')).map(item => ({
             descricao: item.querySelector('.vantagem-descricao').value,
@@ -75,14 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Validar CNPJ (formato básico)
         const cnpj = document.getElementById('empresa-cnpj').value;
         if (!/^\d{14}$/.test(cnpj)) {
             alert('CNPJ deve ter 14 dígitos numéricos!');
             return false;
         }
 
-        // Validar se há pelo menos uma vantagem
         if (document.querySelectorAll('.vantagem-item').length === 0) {
             alert('Adicione pelo menos uma vantagem!');
             return false;
@@ -104,9 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.textContent = 'Cadastrar Empresa';
     }
 
-    // ==============================================
-    // 3. CRUD de Empresas
-    // ==============================================
     async function carregarEmpresas() {
         try {
             const response = await fetch(API_URL);
@@ -138,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 empresasList.appendChild(li);
             });
 
-            // Adicionar event listeners aos botões
             document.querySelectorAll('.btn-editar').forEach(btn => {
                 btn.addEventListener('click', () => editarEmpresa(btn.dataset.id));
             });
@@ -163,30 +149,25 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error('Empresa não encontrada');
             
             const empresa = await response.json();
-            
-            // Preencher formulário
+           
             document.getElementById('empresa-id').value = empresa.id;
             document.getElementById('empresa-nome').value = empresa.nome;
             document.getElementById('empresa-cnpj').value = empresa.cnpj;
             document.getElementById('empresa-email').value = empresa.email;
             document.getElementById('empresa-endereco').value = empresa.endereco;
 
-            // Limpar vantagens existentes
             document.querySelectorAll('.vantagem-item').forEach(item => item.remove());
 
-            // Adicionar vantagens
             empresa.vantagens.forEach(vantagem => {
-                addVantagemBtn.click(); // Simula clique para adicionar novo campo
+                addVantagemBtn.click(); 
                 const lastVantagem = document.querySelector('.vantagem-item:last-child');
                 lastVantagem.querySelector('.vantagem-descricao').value = vantagem.descricao;
                 lastVantagem.querySelector('.vantagem-custo').value = vantagem.custoMoedas;
                 lastVantagem.querySelector('.vantagem-foto').value = vantagem.fotoProduto || '';
             });
 
-            // Alterar texto do botão
             submitBtn.textContent = 'Atualizar Empresa';
-            
-            // Scroll para o topo
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
         } catch (error) {
@@ -215,22 +196,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function pagarEmpresa(id) {
-        // Aqui você pode implementar a lógica de pagamento
-        // Por exemplo, abrir um modal ou redirecionar para uma página de pagamento
-        
+       
         try {
             const response = await fetch(`${API_URL}/${id}`);
             if (!response.ok) throw new Error('Empresa não encontrada');
             
             const empresa = await response.json();
             
-            // Simulação de pagamento - substitua pela sua lógica real
+           
             alert(`Iniciando processo de pagamento para: ${empresa.nome}\n\nVocê será redirecionado para o gateway de pagamento.`);
-            
-            // Aqui você poderia:
-            // 1. Abrir um modal com opções de pagamento
-            // 2. Redirecionar para um gateway de pagamento
-            // 3. Chamar uma API de pagamento
             
             console.log('Processando pagamento para:', empresa);
             
@@ -240,9 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ==============================================
-    // 4. Event Listeners
-    // ==============================================
     empresaForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -288,6 +259,5 @@ document.addEventListener('DOMContentLoaded', () => {
     refreshBtn.addEventListener('click', carregarEmpresas);
     cancelBtn.addEventListener('click', resetForm);
 
-    // Carregar empresas ao iniciar
     carregarEmpresas();
 });

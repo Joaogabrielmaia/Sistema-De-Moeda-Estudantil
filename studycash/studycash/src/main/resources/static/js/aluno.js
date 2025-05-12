@@ -1,7 +1,6 @@
 const API_URL = 'http://localhost:8080/api/alunos';
     const INSTITUICOES_URL = `${API_URL}/instituicoes`;
     
-    // Elementos do DOM
     const form = document.getElementById('aluno-form');
     const idInput = document.getElementById('aluno-id');
     const nomeInput = document.getElementById('aluno-nome');
@@ -19,16 +18,13 @@ const API_URL = 'http://localhost:8080/api/alunos';
     let isEditing = false;
     let instituicoes = [];
     
-    // Inicialização
     document.addEventListener('DOMContentLoaded', () => {
         carregarInstituicoes();
         carregarAlunos();
-        
-        // Máscara para CPF
+ 
         cpfInput.addEventListener('input', formatarCPF);
     });
     
-    // Eventos
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -139,7 +135,6 @@ const API_URL = 'http://localhost:8080/api/alunos';
                 alunosList.appendChild(li);
             });
             
-            // Adicionar eventos aos botões
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', () => editarAluno(btn.dataset.id));
             });
@@ -171,7 +166,7 @@ const API_URL = 'http://localhost:8080/api/alunos';
                     rg: alunoData.rg,
                     endereco: alunoData.endereco,
                     curso: alunoData.curso,
-                    instituicao: alunoData.instituicao // Garantir que está sendo enviado
+                    instituicao: alunoData.instituicao 
                 })
             });
             
