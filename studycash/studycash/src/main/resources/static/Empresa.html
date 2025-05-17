@@ -4,11 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/empresa.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <title>Cadastro de Empresas - StudyCash</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
-    <h1>StudyCash - Cadastro de Empresas</h1>
+
+     <div class="navbar">
+        <div class="navbar-brand">
+            <i class="fas fa-coins"></i>
+            <span>StudyCash</span>
+        </div>
+        
+        <div class="navbar-links" id="navbarLinks">
+           <a href="Dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="Aluno.html" class="active"><i class="fas fa-user-graduate"></i> Alunos</a>
+            <a href="Empresa.html"><i class="fas fa-building"></i> Empresas</a>
+            <a href="#"><i class="fas fa-gift"></i> Benefícios</a>
+            <a href="#"><i class="fas fa-exchange-alt"></i> Transações</a>
+        </div>
+        
+        <div class="navbar-user">
+            <span>Admin</span>
+            <div class="user-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <button class="navbar-toggle" id="navbarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+
+    <h1>Cadastro de Empresas</h1>
 
     <div class="container">
         <div class="form-section">
@@ -36,7 +64,6 @@
                     <input type="text" id="empresa-endereco" required>
                 </div>
 
-                <!-- Seção de Vantagens (Dinâmica via JS) -->
                 <div id="vantagens-container">
                     <h3>Vantagens Oferecidas</h3>
                     <button type="button" id="add-vantagem">Adicionar Vantagem</button>
@@ -57,5 +84,6 @@
     </div>
 
     <script src="js/empresa.js"></script>
+    <script src="js/navbar.js"></script>
 </body>
 </html>

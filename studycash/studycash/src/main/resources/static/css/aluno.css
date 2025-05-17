@@ -130,6 +130,11 @@ button:hover {
 
 .edit-btn {
     background-color: #f39c12;
+    padding: 4px 8px;
+    font-size: 0.8em;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
 }
 
 .edit-btn:hover {
@@ -138,6 +143,11 @@ button:hover {
 
 .delete-btn {
     background-color: #e74c3c;
+    padding: 4px 8px;
+    font-size: 0.8em;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
 }
 
 .delete-btn:hover {
