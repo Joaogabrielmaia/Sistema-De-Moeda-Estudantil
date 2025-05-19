@@ -1,3 +1,7 @@
+<img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=34495e&height=120&section=header"/>
+
+[![Typing SVG](https://readme-typing-svg.herokuapp.com/?color=fff&size=35&center=true&vCenter=true&width=1000&lines=Study+Cash)](https://git.io/typing-svg)
+
 # Diagrama de Caso de Uso
 <img width="2992" alt="Image" src="/Artefatos/Diagramas/Diagrama de Caso de Uso.png" />
 
@@ -34,3 +38,64 @@
 | UC19  | Como usuário, quero que o sistema gere um código único para cada troca, para que o processo de conferência com as empresas seja confiável. |
 | UC20  | Como administrador, quero manter um CRUD das instituições de ensino, para garantir que apenas instituições parceiras estejam disponíveis. | 
 | UC21  | Como aluno, quero consultar as vantagens disponíveis para troca, para escolher as melhores opções conforme meu saldo. |
+
+# Estrutura dos Diretórios
+
+```
+studycash/
+│
+└── src/
+    │
+    └── main/
+        │
+        ├── java/
+        │   └── com/
+        │       └── studycash/
+        │               │
+        │               ├── controller
+        │               │   └── AlunoController.java
+        │               │   └── EmpresaController.java
+        │               │
+        │               ├── dao
+        │               │   └── AlunoDAO.java
+        │               │   └── AlunoDAOImpl.java
+        │               │   └── EmpresaDAO.java
+        │               │   └── EmpresaDAOImpl.java
+        │               │
+        │               ├── model/
+        │               │   └── AlunoDAO.java
+        │               │   └── AlunoDAOImpl.java
+        │               │   └── EmpresaDAO.java
+        │               │   └── EmpresaDAOImpl.java
+        │               │
+        │               │
+        │               ├── service/
+        │               │   └── AlunoService.java
+        │               │   └── EmpresaService.java
+        │               │   
+        │               │
+        │               └── StudycashApplication.java
+        │
+        └── resources/
+            │
+            ├── application.properties
+            │
+            ├── static/
+            │   ├── Aluno.html
+            │   ├── Dashboard.html
+            │   ├── Empresa.html
+            │   │
+            │   ├── css/
+            │   │   ├── aluno.css
+            │   │   ├── dashboard.css
+            │   │   ├── empresa.css
+            │   │   ├── navbar.css
+            │   │
+            │   └── js/
+            │       ├── aluno.js
+            │       ├── dashboard.js
+            │       ├── empresa.js
+            │       ├── navbar.js
+```
+
+<img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=34495e&height=120&section=header"/>
