@@ -98,4 +98,7 @@ studycash/
             │       ├── navbar.js
 ```
 
-<img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=34495e&height=120&section=header"/>
+# Link dos slides
+https://www.canva.com/design/DAGn2Sy5p6g/6NceNi2YpmaalUo-rZddmw/edit?utm_content=DAGn2Sy5p6g&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
+<img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=34495db&height=120&section=footer"/>
