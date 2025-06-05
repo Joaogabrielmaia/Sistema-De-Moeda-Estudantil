@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Professor</title>
+</head>
+<body>
+    <h1>Painel do Professor</h1>
+
+    <p>E-mail: <span id="professorEmail"></span></p>
+    <p>Saldo atual: <span id="saldo"></span> moedas</p>
+
+    <h2>Enviar Moedas</h2>
+    <form id="formEnvio">
+        <label>E-mail do Aluno: <input type="email" name="alunoEmail" required></label><br>
+        <label>Quantidade de Moedas: <input type="number" name="quantidade" required></label><br>
+        <label>Mensagem: <input type="text" name="mensagem" required></label><br>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <h2>Extrato de Transações</h2>
+    <div id="extrato"></div>
+
+    <script>
+        const professorEmail = localStorage.getItem('email') || prompt("Informe seu e-mail para simular login:");
+        localStorage.setItem('email', professorEmail);
+        document.getElementById('professorEmail').textContent = professorEmail;
+
+        function carregarSaldo() {
+            fetch(`http://localhost:8080/api/professor/saldo/${professorEmail}`)
+                .then(response => response.json())
+                .then(saldo => {
+                    document.getElementById('saldo').textContent = saldo;
+                });
+        }
+
+        function carregarExtrato() {
+            fetch(`http://localhost:8080/api/professor/transacoes/${professorEmail}`)
+                .then(response => response.json())
+                .then(transacoes => {
+                    const extrato = document.getElementById('extrato');
+                    extrato.innerHTML = '';
+                    transacoes.forEach(t => {
+                        const div = document.createElement('div');
+                        div.innerHTML = `
+                            <hr>
+                            Aluno: ${t.alunoEmail}<br>
+                            Quantidade: ${t.quantidade}<br>
+                            Mensagem: ${t.mensagem}<br>
+                            Data: ${t.data}<br>
+                        `;
+                        extrato.appendChild(div);
+                    });
+                });
+        }
+
+        document.getElementById('formEnvio').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const dados = {
+                professorEmail,
+                alunoEmail: formData.get('alunoEmail'),
+                quantidade: parseInt(formData.get('quantidade')),
+                mensagem: formData.get('mensagem')
+            };
+
+            fetch('http://localhost:8080/api/professor/enviar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            })
+            .then(response => response.text())
+            .then(msg => {
+                alert(msg);
+                carregarSaldo();
+                carregarExtrato();
+                this.reset();
+            });
+        });
+
+        carregarSaldo();
+        carregarExtrato();
+    </script>
+</body>
+</html>

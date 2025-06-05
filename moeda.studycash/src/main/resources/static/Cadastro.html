@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+</head>
+<body>
+    <h1>Cadastro</h1>
+    <form id="formCadastro">
+        <label>Nome: <input type="text" name="nome" required></label><br>
+        <label>Email: <input type="email" name="email" required></label><br>
+        <label>Senha: <input type="password" name="senha" required></label><br>
+        <label>CPF: <input type="text" name="cpf"></label><br>
+        <label>RG: <input type="text" name="rg"></label><br>
+        <label>Endereço: <input type="text" name="endereco"></label><br>
+        <label>Tipo de Conta:
+            <select name="tipoConta" id="tipoConta" required>
+                <option value="Aluno">Aluno</option>
+                <option value="Professor">Professor</option>
+                <option value="EmpresaParceira">EmpresaParceira</option>
+            </select>
+        </label><br>
+
+        <div id="alunoCampos">
+            <label>Curso: <input type="text" name="curso"></label><br>
+        </div>
+
+        <div id="professorCampos" style="display:none">
+            <label>Departamento: <input type="text" name="departamento"></label><br>
+            <label>Instituição:
+                <select name="instituicao">
+                    <option value="PUC Minas - Barreiro">PUC Minas - Barreiro</option>
+                    <option value="PUC Minas - Coração Eucarístico">PUC Minas - Coração Eucarístico</option>
+                    <option value="PUC Minas - Lourdes">PUC Minas - Lourdes</option>
+                    <option value="PUC Minas - São Gabriel">PUC Minas - São Gabriel</option>
+                    <option value="PUC Minas - Betim">PUC Minas - Betim</option>
+                    <option value="PUC Minas - Contagem">PUC Minas - Contagem</option>
+                    <option value="PUC Minas - Poços de Caldas">PUC Minas - Poços de Caldas</option>
+                    <option value="PUC Minas - Arcos">PUC Minas - Arcos</option>
+                    <option value="PUC Minas - Guanhães">PUC Minas - Guanhães</option>
+                    <option value="PUC Minas - Serro">PUC Minas - Serro</option>
+                </select>
+            </label><br>
+        </div>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <script>
+        const tipoConta = document.getElementById('tipoConta');
+        const alunoCampos = document.getElementById('alunoCampos');
+        const professorCampos = document.getElementById('professorCampos');
+
+        tipoConta.addEventListener('change', () => {
+            if (tipoConta.value === 'Aluno') {
+                alunoCampos.style.display = 'block';
+                professorCampos.style.display = 'none';
+            } else if (tipoConta.value === 'Professor') {
+                alunoCampos.style.display = 'none';
+                professorCampos.style.display = 'block';
+            } else {
+                alunoCampos.style.display = 'none';
+                professorCampos.style.display = 'none';
+            }
+        });
+
+        document.getElementById('formCadastro').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => data[key] = value);
+
+            fetch('http://localhost:8080/api/usuarios/cadastro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(result => alert(result));
+        });
+    </script>
+</body>
+</html>

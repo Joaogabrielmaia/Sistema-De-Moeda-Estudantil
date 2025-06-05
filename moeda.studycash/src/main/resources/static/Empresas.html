@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel da Empresa Parceira</title>
+</head>
+<body>
+    <h1>Painel da Empresa</h1>
+
+    <h2>Cadastrar Nova Vantagem</h2>
+    <form id="formVantagem">
+        <label>Nome: <input type="text" name="nome" required></label><br>
+        <label>URL da Imagem: <input type="text" name="imagemUrl" required></label><br>
+        <label>Preço em Moedas: <input type="number" name="precoEmMoedas" required></label><br>
+        <button type="submit">Cadastrar Vantagem</button>
+    </form>
+
+    <h2>Minhas Vantagens</h2>
+    <div id="listaVantagens"></div>
+
+    <script>
+        const empresaEmail = localStorage.getItem('email') || prompt("Informe o e-mail da empresa para simular login:");
+        localStorage.setItem('email', empresaEmail);
+
+        function carregarVantagens() {
+            fetch(`http://localhost:8080/api/vantagens/empresa/${empresaEmail}`)
+                .then(response => response.json())
+                .then(vantagens => {
+                    const lista = document.getElementById('listaVantagens');
+                    lista.innerHTML = '';
+                    vantagens.forEach(v => {
+                        const div = document.createElement('div');
+                        div.innerHTML = `
+                            <hr>
+                            <img src="${v.imagemUrl}" width="100"><br>
+                            <strong>${v.nome}</strong><br>
+                            Preço: ${v.precoEmMoedas} moedas<br>
+                            <button onclick="editar(${v.id}, '${v.nome}', '${v.imagemUrl}', ${v.precoEmMoedas})">Editar</button>
+                            <button onclick="excluir(${v.id})">Excluir</button>
+                        `;
+                        lista.appendChild(div);
+                    });
+                });
+        }
+
+        function editar(id, nome, imagemUrl, precoEmMoedas) {
+            const novoNome = prompt("Novo nome:", nome);
+            const novaImagem = prompt("Nova imagem URL:", imagemUrl);
+            const novoPreco = prompt("Novo preço em moedas:", precoEmMoedas);
+
+            fetch(`http://localhost:8080/api/vantagens/editar/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome: novoNome, imagemUrl: novaImagem, precoEmMoedas: parseInt(novoPreco), empresaEmail })
+            })
+            .then(response => response.text())
+            .then(() => carregarVantagens());
+        }
+
+        function excluir(id) {
+            fetch(`http://localhost:8080/api/vantagens/excluir/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.text())
+            .then(() => carregarVantagens());
+        }
+
+        document.getElementById('formVantagem').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const dados = {};
+            formData.forEach((v, k) => dados[k] = v);
+            dados.empresaEmail = empresaEmail;
+
+            fetch('http://localhost:8080/api/vantagens/cadastrar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            })
+            .then(response => response.text())
+            .then(() => {
+                this.reset();
+                carregarVantagens();
+            });
+        });
+
+        carregarVantagens();
+    </script>
+</body>
+</html>

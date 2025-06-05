@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Área do Aluno</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        section { margin-bottom: 30px; }
+        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 8px; }
+        img { width: 100px; height: auto; }
+        #extrato div { margin-bottom: 10px; }
+        #extrato hr { margin: 10px 0; }
+    </style>
+</head>
+<body>
+<h1>Bem-vindo, Aluno</h1>
+<p>Email: <span id="alunoEmail"></span></p>
+<p>Saldo atual: <span id="saldo"></span> moedas</p>
+
+<section>
+    <h2>Vantagens Disponíveis</h2>
+    <table id="vantagensTable">
+        <thead>
+            <tr><th>Imagem</th><th>Título</th><th>Empresa</th><th>Preço</th><th>Ação</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Histórico de Trocas</h2>
+    <table id="trocasTable">
+        <thead>
+            <tr><th>Vantagem</th><th>Empresa</th><th>Data</th><th>Custo</th><th>Código</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
+<script>
+const email = sessionStorage.getItem("email");
+if (!email) window.location.href = "Login.html";
+
+document.getElementById("alunoEmail").textContent = email;
+
+fetch(`http://localhost:8080/api/aluno/saldo/${email}`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("saldo").textContent = data;
+  });
+
+fetch("http://localhost:8080/api/aluno/vantagens")
+  .then(res => res.json())
+  .then(data => {
+    const table = document.querySelector("#vantagensTable tbody");
+    table.innerHTML = "";
+    data.forEach(v => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><img src="${v.imagemUrl}"/></td>
+        <td>${v.nome}</td>
+        <td>${v.empresaEmail}</td>
+        <td>${v.precoEmMoedas}</td>
+        <td><button onclick="trocar(${v.id})">Trocar</button></td>
+      `;
+      table.appendChild(tr);
+    });
+  });
+
+function trocar(idVantagem) {
+  fetch("http://localhost:8080/api/aluno/trocar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, idVantagem })
+  })
+    .then(res => {
+      if (!res.ok) return res.text().then(t => { throw new Error(t) });
+      return res.text();
+    })
+    .then(cupom => {
+      alert("Troca realizada com sucesso. Código do cupom: " + cupom);
+      location.reload();
+    })
+    .catch(err => alert(err.message));
+}
+
+fetch(`http://localhost:8080/api/aluno/trocas/${email}`)
+  .then(res => res.json())
+  .then(data => {
+    const table = document.querySelector("#trocasTable tbody");
+    table.innerHTML = "";
+    data.forEach(t => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${t.vantagem}</td>
+        <td>${t.empresa}</td>
+        <td>${t.data}</td>
+        <td>${t.custo}</td>
+        <td>${t.codigoCupom}</td>
+      `;
+      table.appendChild(tr);
+    });
+  });
+
+</script>
+</body>
+</html>
