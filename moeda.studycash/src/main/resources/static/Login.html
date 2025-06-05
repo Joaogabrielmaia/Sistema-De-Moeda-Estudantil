@@ -2,48 +2,48 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Moeda Estudantil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/Login.css">
+
 </head>
 <body>
-    <h1>Login</h1>
-    <form id="formLogin">
-        <label>Email: <input type="email" name="email" required></label><br>
-        <label>Senha: <input type="password" name="senha" required></label><br>
-        <button type="submit">Entrar</button>
-    </form>
+    <div class="form-wrapper">
+        <div class="logo">
+            <h1><i class="fas fa-coins"></i> Moeda Estudantil</h1>
+            <p>Faça login para acessar sua conta</p>
+        </div>
+        
+        <form id="formLogin">
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <div class="input-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-control" id="email" name="email" required placeholder="seu@email.com">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-control" id="senha" name="senha" required placeholder="Digite sua senha">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Entrar
+            </button>
+            
+            <div class="register-link">
+                Não tem uma conta? <a href="Cadastro.html">Cadastre-se</a>
+            </div>
+        </form>
+    </div>
 
-    <script>
-        document.getElementById('formLogin').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const formData = new FormData(this);
-    const data = {};
-    formData.forEach((value, key) => data[key] = value);
+    <script src="js/Login.js"></script>
 
-    fetch('http://localhost:8080/api/usuarios/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Credenciais inválidas');
-        }
-    })
-    .then(usuario => {
-        sessionStorage.setItem("email", usuario.email);
-        if (usuario.tipoConta === 'Aluno') {
-            window.location.href = 'Aluno.html';
-        } else if (usuario.tipoConta === 'Professor') {
-            window.location.href = 'Professor.html';
-        } else {
-            window.location.href = 'Empresas.html';
-        }
-    })
-    .catch(error => alert(error.message));
-});
-
-    </script>
 </body>
 </html>

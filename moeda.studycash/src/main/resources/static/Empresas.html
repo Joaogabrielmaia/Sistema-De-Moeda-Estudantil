@@ -2,89 +2,64 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Painel da Empresa Parceira</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel da Empresa - Moeda Estudantil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/Empresa.css">
+
 </head>
 <body>
-    <h1>Painel da Empresa</h1>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <div class="logo-text">
+                    <h1>Moeda Estudantil</h1>
+                    <p>Painel da Empresa Parceira</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <p>Logado como: <strong id="empresaEmail"></strong></p>
+            </div>
+        </header>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-plus-circle"></i> Cadastrar Nova Vantagem</h2>
+            <form id="formVantagem">
+                <div class="form-group">
+                    <label for="nome">Nome da Vantagem</label>
+                    <input type="text" class="form-control" id="nome" name="nome" required placeholder="Ex: Desconto em livros">
+                </div>
+                
+                <div class="form-group">
+                    <label for="imagemUrl">URL da Imagem</label>
+                    <input type="text" class="form-control" id="imagemUrl" name="imagemUrl" required placeholder="https://exemplo.com/imagem.jpg">
+                </div>
+                
+                <div class="form-group">
+                    <label for="precoEmMoedas">Preço em Moedas</label>
+                    <input type="number" class="form-control" id="precoEmMoedas" name="precoEmMoedas" required placeholder="Quantidade de moedas">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Cadastrar Vantagem
+                </button>
+            </form>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-gift"></i> Minhas Vantagens</h2>
+            <div id="listaVantagens" class="vantagens-grid">
+                <div class="empty-state">
+                    <i class="fas fa-box-open"></i>
+                    <p>Nenhuma vantagem cadastrada ainda</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h2>Cadastrar Nova Vantagem</h2>
-    <form id="formVantagem">
-        <label>Nome: <input type="text" name="nome" required></label><br>
-        <label>URL da Imagem: <input type="text" name="imagemUrl" required></label><br>
-        <label>Preço em Moedas: <input type="number" name="precoEmMoedas" required></label><br>
-        <button type="submit">Cadastrar Vantagem</button>
-    </form>
+    <script src="js/Empresa.js"></script>
 
-    <h2>Minhas Vantagens</h2>
-    <div id="listaVantagens"></div>
-
-    <script>
-        const empresaEmail = localStorage.getItem('email') || prompt("Informe o e-mail da empresa para simular login:");
-        localStorage.setItem('email', empresaEmail);
-
-        function carregarVantagens() {
-            fetch(`http://localhost:8080/api/vantagens/empresa/${empresaEmail}`)
-                .then(response => response.json())
-                .then(vantagens => {
-                    const lista = document.getElementById('listaVantagens');
-                    lista.innerHTML = '';
-                    vantagens.forEach(v => {
-                        const div = document.createElement('div');
-                        div.innerHTML = `
-                            <hr>
-                            <img src="${v.imagemUrl}" width="100"><br>
-                            <strong>${v.nome}</strong><br>
-                            Preço: ${v.precoEmMoedas} moedas<br>
-                            <button onclick="editar(${v.id}, '${v.nome}', '${v.imagemUrl}', ${v.precoEmMoedas})">Editar</button>
-                            <button onclick="excluir(${v.id})">Excluir</button>
-                        `;
-                        lista.appendChild(div);
-                    });
-                });
-        }
-
-        function editar(id, nome, imagemUrl, precoEmMoedas) {
-            const novoNome = prompt("Novo nome:", nome);
-            const novaImagem = prompt("Nova imagem URL:", imagemUrl);
-            const novoPreco = prompt("Novo preço em moedas:", precoEmMoedas);
-
-            fetch(`http://localhost:8080/api/vantagens/editar/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nome: novoNome, imagemUrl: novaImagem, precoEmMoedas: parseInt(novoPreco), empresaEmail })
-            })
-            .then(response => response.text())
-            .then(() => carregarVantagens());
-        }
-
-        function excluir(id) {
-            fetch(`http://localhost:8080/api/vantagens/excluir/${id}`, {
-                method: 'DELETE'
-            })
-            .then(response => response.text())
-            .then(() => carregarVantagens());
-        }
-
-        document.getElementById('formVantagem').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const dados = {};
-            formData.forEach((v, k) => dados[k] = v);
-            dados.empresaEmail = empresaEmail;
-
-            fetch('http://localhost:8080/api/vantagens/cadastrar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dados)
-            })
-            .then(response => response.text())
-            .then(() => {
-                this.reset();
-                carregarVantagens();
-            });
-        });
-
-        carregarVantagens();
-    </script>
 </body>
 </html>
